@@ -27,6 +27,7 @@
 
         .container {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -63,6 +64,8 @@
             background: #f8f9fa;
             padding: 25px;
             border-radius: 15px;
+            min-width: 0;
+            overflow: hidden;
         }
 
         .section-title {
@@ -88,6 +91,7 @@
         .input-group input,
         .input-group select {
             width: 100%;
+            max-width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
@@ -95,6 +99,7 @@
             transition: border-color 0.3s;
             -webkit-appearance: none;
             appearance: none;
+            box-sizing: border-box;
         }
 
         .input-group input:focus,
@@ -135,7 +140,7 @@
 
         .summary-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -181,11 +186,11 @@
         .table-container {
             background: white;
             border-radius: 12px;
-            overflow: hidden;
             max-height: 600px;
-            overflow-y: auto;
             overflow-x: auto;
+            overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            width: 100%;
         }
 
         table {
@@ -319,11 +324,14 @@
             .content {
                 padding: 12px;
                 gap: 12px;
+                width: 100%;
             }
 
             .input-section,
             .results-section {
                 padding: 15px;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .section-title {
@@ -333,10 +341,12 @@
             .summary-cards {
                 grid-template-columns: 1fr;
                 gap: 12px;
+                width: 100%;
             }
 
             .summary-card {
                 padding: 15px;
+                min-width: 0;
             }
 
             .summary-card .value {
@@ -398,10 +408,12 @@
         @media (max-width: 480px) {
             body {
                 padding: 5px;
+                overflow-x: hidden;
             }
 
             .container {
                 border-radius: 10px;
+                width: calc(100vw - 10px);
             }
 
             .header {
@@ -462,7 +474,7 @@
             }
 
             table {
-                min-width: 480px;
+                min-width: 450px;
             }
 
             .calculate-btn {
