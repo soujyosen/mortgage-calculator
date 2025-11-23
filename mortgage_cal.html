@@ -1,54 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Australian Home Mortgage Calculator with Offset Account</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
+
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
+
         .header h1 {
             font-size: 2em;
             margin-bottom: 10px;
         }
+
         .header p {
             opacity: 0.9;
             font-size: 1.1em;
         }
+
         .content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             padding: 30px;
         }
-        .input-section, .results-section {
+
+        .input-section,
+        .results-section {
             background: #f8f9fa;
             padding: 25px;
             border-radius: 15px;
         }
+
         .section-title {
             font-size: 1.5em;
             color: #667eea;
@@ -56,9 +69,11 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
         }
+
         .input-group {
             margin-bottom: 20px;
         }
+
         .input-group label {
             display: block;
             margin-bottom: 8px;
@@ -66,23 +81,31 @@
             font-weight: 600;
             font-size: 0.95em;
         }
-        .input-group input, .input-group select {
+
+        .input-group input,
+        .input-group select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: 16px;
             transition: border-color 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .input-group input:focus, .input-group select:focus {
+
+        .input-group input:focus,
+        .input-group select:focus {
             outline: none;
             border-color: #667eea;
         }
+
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+
         .calculate-btn {
             width: 100%;
             padding: 15px;
@@ -95,48 +118,61 @@
             cursor: pointer;
             transition: transform 0.2s;
             margin-top: 20px;
+            -webkit-tap-highlight-color: transparent;
         }
+
         .calculate-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
+
         .calculate-btn:active {
             transform: translateY(0);
         }
+
         .summary-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
+
         .summary-card {
             background: white;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .summary-card h3 {
             font-size: 0.9em;
             color: #666;
             margin-bottom: 8px;
         }
+
         .summary-card .value {
             font-size: 1.8em;
             color: #667eea;
             font-weight: 700;
+            word-break: break-word;
         }
+
         .summary-card.green .value {
             color: #10b981;
         }
+
         .summary-card.red .value {
             color: #ef4444;
         }
+
         .summary-card.orange .value {
             color: #f59e0b;
         }
+
         .summary-card.purple .value {
             color: #8b5cf6;
         }
+
         .table-container {
             background: white;
             border-radius: 12px;
@@ -144,12 +180,15 @@
             max-height: 600px;
             overflow-y: auto;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             min-width: 600px;
         }
+
         thead {
             background: #667eea;
             color: white;
@@ -157,31 +196,46 @@
             top: 0;
             z-index: 10;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px;
             text-align: right;
             border-bottom: 1px solid #e0e0e0;
             font-size: 0.9em;
         }
-        th:first-child, td:first-child {
+
+        th:first-child,
+        td:first-child {
             text-align: left;
         }
+
         tbody tr:hover {
             background: #f8f9fa;
         }
+
         .highlight-row {
             background: #fef3c7 !important;
             font-weight: 600;
         }
+
+        .breakeven-row {
+            background: #d1fae5 !important;
+            font-weight: 700;
+            border-left: 4px solid #10b981;
+        }
+
         .full-width {
             grid-column: 1 / -1;
         }
+
         .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
+
         .tab {
             padding: 10px 20px;
             background: white;
@@ -194,23 +248,30 @@
             flex: 1;
             min-width: 120px;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
+
         .tab.active {
             background: #667eea;
             color: white;
         }
+
         .tab:hover {
             background: #e0e7ff;
         }
+
         .tab.active:hover {
             background: #667eea;
         }
+
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .info-box {
             background: #e0e7ff;
             padding: 15px;
@@ -218,107 +279,135 @@
             margin-bottom: 20px;
             border-left: 4px solid #667eea;
         }
+
         .info-box p {
             color: #4338ca;
             margin-bottom: 5px;
             font-size: 0.9em;
         }
-        
+
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .content {
                 grid-template-columns: 1fr;
             }
-            .summary-cards {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1.5em;
-            }
-            .header p {
-                font-size: 0.95em;
-            }
         }
-        
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
             }
+
             .header {
                 padding: 20px 15px;
             }
+
             .header h1 {
-                font-size: 1.3em;
+                font-size: 1.5em;
             }
+
             .header p {
-                font-size: 0.9em;
+                font-size: 0.95em;
             }
+
             .content {
                 padding: 15px;
                 gap: 15px;
             }
-            .input-section, .results-section {
+
+            .input-section,
+            .results-section {
                 padding: 15px;
             }
+
             .section-title {
-                font-size: 1.2em;
+                font-size: 1.3em;
             }
+
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+
             .summary-card .value {
-                font-size: 1.4em;
+                font-size: 1.5em;
             }
+
             .summary-card h3 {
                 font-size: 0.85em;
             }
+
             .tabs {
                 gap: 5px;
             }
+
             .tab {
-                padding: 8px 12px;
+                padding: 10px 15px;
                 font-size: 0.9em;
                 min-width: 100px;
             }
-            th, td {
+
+            th,
+            td {
                 padding: 8px 6px;
                 font-size: 0.8em;
             }
+
             .calculate-btn {
                 font-size: 1em;
                 padding: 12px;
             }
+
             .input-group label {
                 font-size: 0.9em;
             }
-            .input-group input, .input-group select {
+
+            .input-group input,
+            .input-group select {
                 padding: 10px;
-                font-size: 0.95em;
+                font-size: 16px;
+            }
+
+            .table-container {
+                max-height: 500px;
             }
         }
-        
+
         @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.1em;
+            body {
+                padding: 5px;
             }
+
+            .container {
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.2em;
+            }
+
             .header p {
                 font-size: 0.85em;
             }
-            .summary-cards {
-                gap: 10px;
-            }
+
             .summary-card {
                 padding: 15px;
             }
+
             .summary-card .value {
-                font-size: 1.2em;
+                font-size: 1.3em;
             }
+
             .table-container {
                 max-height: 400px;
             }
+
             table {
                 min-width: 500px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -412,14 +501,18 @@
                         <div class="value" id="emiAmount">$0</div>
                     </div>
                     <div class="summary-card green">
+                        <h3>Breakeven Time</h3>
+                        <div class="value" id="breakevenTime">-</div>
+                    </div>
+                    <div class="summary-card green">
                         <h3>Final Offset Balance</h3>
                         <div class="value" id="finalOffset">$0</div>
                     </div>
                 </div>
                 <div class="tabs">
-                    <div class="tab active" onclick="showTab('monthly')">Monthly View</div>
-                    <div class="tab" onclick="showTab('fortnightly')">Fortnightly View</div>
-                    <div class="tab" onclick="showTab('yearly')">Yearly View</div>
+                    <div class="tab active" onclick="showTab(event, 'monthly')">Monthly View</div>
+                    <div class="tab" onclick="showTab(event, 'fortnightly')">Fortnightly View</div>
+                    <div class="tab" onclick="showTab(event, 'yearly')">Yearly View</div>
                 </div>
                 <div id="monthly" class="tab-content active">
                     <div class="table-container">
@@ -477,7 +570,7 @@
         </div>
     </div>
     <script>
-        function showTab(tabName) {
+        function showTab(event, tabName) {
             // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
@@ -487,14 +580,16 @@
             });
             // Show selected tab
             document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+            event.currentTarget.classList.add('active');
         }
+
         function formatCurrency(amount) {
             return '$' + Math.abs(amount).toLocaleString('en-AU', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
         }
+
         function formatDate(date) {
             return date.toLocaleDateString('en-AU', {
                 year: 'numeric',
@@ -502,6 +597,7 @@
                 day: 'numeric'
             });
         }
+
         function getNextThursday(date) {
             const result = new Date(date);
             const dayOfWeek = result.getDay();
@@ -509,6 +605,47 @@
             result.setDate(result.getDate() + (daysUntilThursday === 0 ? 7 : daysUntilThursday));
             return result;
         }
+
+        function calculateMonthsDifference(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            let years = end.getFullYear() - start.getFullYear();
+            let months = end.getMonth() - start.getMonth();
+            let days = end.getDate() - start.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const totalMonths = years * 12 + months + (days / 30);
+            return totalMonths;
+        }
+
+        function formatTimePeriod(months) {
+            if (months < 1) {
+                return Math.round(months * 30) + ' days';
+            }
+
+            const years = Math.floor(months / 12);
+            const remainingMonths = Math.round(months % 12);
+
+            if (years === 0) {
+                return remainingMonths + (remainingMonths === 1 ? ' month' : ' months');
+            } else if (remainingMonths === 0) {
+                return years + (years === 1 ? ' year' : ' years');
+            } else {
+                return years + 'y ' + remainingMonths + 'm';
+            }
+        }
+
         function calculate() {
             // Get input values
             const loanAmount = parseFloat(document.getElementById('loanAmount').value);
@@ -521,28 +658,52 @@
             const ccExpenses = parseFloat(document.getElementById('ccExpenses').value);
             const ccPaymentDate = parseInt(document.getElementById('ccPaymentDate').value);
             let offsetBalance = parseFloat(document.getElementById('initialOffset').value);
+
+            // Validation
+            if (isNaN(loanAmount) || loanAmount <= 0) {
+                alert('Please enter a valid loan amount');
+                return;
+            }
+            if (isNaN(annualRate) || annualRate < 0 || annualRate > 30) {
+                alert('Please enter a valid interest rate (0-30%)');
+                return;
+            }
+            if (isNaN(loanTermYears) || loanTermYears <= 0 || loanTermYears > 40) {
+                alert('Please enter a valid loan term (1-40 years)');
+                return;
+            }
+            if (emiDate < 1 || emiDate > 28) {
+                alert('EMI date must be between 1 and 28');
+                return;
+            }
+
             // Calculate daily interest rate
             const dailyRate = annualRate / 365;
+
             // Calculate EMI (monthly)
             const monthlyRate = annualRate / 12;
             const numPayments = loanTermYears * 12;
             const emi = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
-                        (Math.pow(1 + monthlyRate, numPayments) - 1);
+                (Math.pow(1 + monthlyRate, numPayments) - 1);
+
             // Calculate without offset (for comparison)
             const totalInterestWithoutOffset = (emi * numPayments) - loanAmount;
+
             // Initialize tracking variables
             let loanBalance = loanAmount;
             let totalInterestPaid = 0;
             let totalPrincipalPaid = 0;
-            let currentDate = new Date('2026-01-01');
-            const startDate = new Date(currentDate);
+            const startDate = new Date('2026-01-01');
+            let currentDate = new Date(startDate);
             const endDate = new Date(currentDate);
-            endDate.setFullYear(endDate.getFullYear() + loanTermYears + 2); // Add buffer
+            endDate.setFullYear(endDate.getFullYear() + loanTermYears + 5); // Add extra buffer
+
             // Data storage
             const dailyData = [];
             const monthlyData = [];
             const fortnightlyData = [];
             const yearlyData = [];
+
             let monthlyInterest = 0;
             let monthlyPrincipal = 0;
             let fortnightlyInterest = 0;
@@ -552,43 +713,86 @@
             let currentMonth = currentDate.getMonth();
             let currentYear = currentDate.getFullYear();
             let fortnightCount = 0;
-            let nextThursday = getNextThursday(currentDate);
+            let nextThursday = getNextThursday(new Date(startDate));
+            let monthlyInterestAccrued = 0; // Interest accrued since last payment
+            let breakevenDate = null; // Track when offset >= loan
+            let breakevenReached = false;
+
             // Simulation loop
-            while (loanBalance > 0.01 && currentDate <= endDate) {
+            let iterationCount = 0;
+            const maxIterations = 365 * 40; // Safety limit
+
+            while (loanBalance > 0.01 && currentDate <= endDate && iterationCount < maxIterations) {
+                iterationCount++;
+
                 const dayOfMonth = currentDate.getDate();
                 const month = currentDate.getMonth();
                 const year = currentDate.getFullYear();
                 const dayOfWeek = currentDate.getDay();
+
                 // Credit salary 1 (fortnightly on Thursday)
-                if (currentDate >= nextThursday && currentDate.getDay() === 4) {
+                if (currentDate.getTime() === nextThursday.getTime()) {
                     offsetBalance += salary1Fortnight;
+                    nextThursday = new Date(nextThursday);
                     nextThursday.setDate(nextThursday.getDate() + 14);
                 }
+
                 // Credit salary 2 (monthly on 14th)
                 if (dayOfMonth === 14) {
                     offsetBalance += salary2Monthly;
                 }
+
                 // Pay credit card bill
                 if (dayOfMonth === ccPaymentDate) {
                     offsetBalance -= ccExpenses;
                 }
-                // Pay EMI
-                if (dayOfMonth === emiDate) {
-                    const principalPayment = Math.min(emi, loanBalance);
-                    loanBalance -= principalPayment;
-                    offsetBalance -= emi;
-                    monthlyPrincipal += principalPayment;
-                    fortnightlyPrincipal += principalPayment;
-                    yearlyPrincipal += principalPayment;
-                    totalPrincipalPaid += principalPayment;
-                }
+
                 // Calculate daily interest on effective balance
                 const effectiveBalance = Math.max(0, loanBalance - offsetBalance);
                 const dailyInterest = effectiveBalance * dailyRate;
+
+                // Accrue interest
+                monthlyInterestAccrued += dailyInterest;
                 totalInterestPaid += dailyInterest;
                 monthlyInterest += dailyInterest;
                 fortnightlyInterest += dailyInterest;
                 yearlyInterest += dailyInterest;
+
+                // Pay EMI on EMI date
+                if (dayOfMonth === emiDate && loanBalance > 0) {
+                    // Add accrued interest to loan balance
+                    loanBalance += monthlyInterestAccrued;
+
+                    // Make payment
+                    const paymentAmount = Math.min(emi, loanBalance);
+                    loanBalance -= paymentAmount;
+                    offsetBalance -= paymentAmount;
+
+                    // Principal paid is payment minus interest
+                    const principalPaid = paymentAmount - monthlyInterestAccrued;
+
+                    if (principalPaid > 0) {
+                        monthlyPrincipal += principalPaid;
+                        fortnightlyPrincipal += principalPaid;
+                        yearlyPrincipal += principalPaid;
+                        totalPrincipalPaid += principalPaid;
+                    }
+
+                    // Reset monthly interest accrued
+                    monthlyInterestAccrued = 0;
+
+                    // If loan is paid off, break
+                    if (loanBalance < 0.01) {
+                        loanBalance = 0;
+                    }
+                }
+
+                // Check for breakeven point (offset >= loan)
+                if (!breakevenReached && offsetBalance >= loanBalance) {
+                    breakevenReached = true;
+                    breakevenDate = new Date(currentDate);
+                }
+
                 // Store daily data
                 dailyData.push({
                     date: new Date(currentDate),
@@ -597,10 +801,12 @@
                     effectiveBalance: effectiveBalance,
                     dailyInterest: dailyInterest
                 });
+
                 // Month end recording
                 const nextDay = new Date(currentDate);
                 nextDay.setDate(nextDay.getDate() + 1);
-                if (nextDay.getMonth() !== currentMonth) {
+
+                if (nextDay.getMonth() !== currentMonth || loanBalance <= 0.01) {
                     monthlyData.push({
                         date: new Date(currentDate),
                         loanBalance: loanBalance,
@@ -612,9 +818,10 @@
                     monthlyPrincipal = 0;
                     currentMonth = nextDay.getMonth();
                 }
+
                 // Fortnight recording
                 fortnightCount++;
-                if (fortnightCount >= 14) {
+                if (fortnightCount >= 14 || loanBalance <= 0.01) {
                     fortnightlyData.push({
                         date: new Date(currentDate),
                         loanBalance: loanBalance,
@@ -626,8 +833,9 @@
                     fortnightlyPrincipal = 0;
                     fortnightCount = 0;
                 }
+
                 // Year end recording
-                if (nextDay.getFullYear() !== currentYear) {
+                if (nextDay.getFullYear() !== currentYear || loanBalance <= 0.01) {
                     yearlyData.push({
                         year: currentYear,
                         loanBalance: loanBalance,
@@ -641,59 +849,48 @@
                     yearlyPrincipal = 0;
                     currentYear = nextDay.getFullYear();
                 }
+
                 // Move to next day
                 currentDate.setDate(currentDate.getDate() + 1);
-                // Safety check
-                if (dailyData.length > 365 * 40) break;
             }
-            
-            // Calculate actual time taken
-            const endDateActual = dailyData[dailyData.length - 1].date;
-            const totalDays = Math.floor((endDateActual - startDate) / (1000 * 60 * 60 * 24));
-            const totalMonthsTaken = totalDays / 30.44; // Average days per month
-            const totalYearsTaken = totalDays / 365.25; // Account for leap years
-            
-            // Calculate savings
+
+            // Handle any remaining balance in the final month if loan is paid off
+            if (dailyData.length === 0) {
+                alert('Calculation error: No data generated. Please check your inputs.');
+                return;
+            }
+
+            // Calculate actual time taken with offset
+            const finalDate = new Date(dailyData[dailyData.length - 1].date);
+            const actualMonthsTaken = calculateMonthsDifference(startDate, finalDate);
+
+            // Calculate expected time without offset
+            const expectedMonths = loanTermYears * 12;
+
+            // Calculate time saved
+            const monthsSaved = expectedMonths - actualMonthsTaken;
+
+            // Calculate interest savings
             const interestSaved = totalInterestWithoutOffset - totalInterestPaid;
-            const monthsSaved = numPayments - totalMonthsTaken;
-            const yearsSaved = loanTermYears - totalYearsTaken;
-            
-            // Format total time display
-            let totalTimeDisplay;
-            if (totalYearsTaken >= 1) {
-                const years = Math.floor(totalYearsTaken);
-                const months = Math.round((totalYearsTaken - years) * 12);
-                if (months === 0) {
-                    totalTimeDisplay = `${years} year${years !== 1 ? 's' : ''}`;
-                } else {
-                    totalTimeDisplay = `${years}y ${months}m`;
-                }
-            } else {
-                totalTimeDisplay = `${Math.round(totalMonthsTaken)} months`;
+
+            // Calculate breakeven time
+            let breakevenMonths = 0;
+            let breakevenText = 'Not reached';
+            if (breakevenDate) {
+                breakevenMonths = calculateMonthsDifference(startDate, breakevenDate);
+                breakevenText = formatTimePeriod(breakevenMonths);
             }
-            
-            // Format time saved display
-            let timeSavedDisplay;
-            if (monthsSaved >= 12) {
-                const yearsSavedInt = Math.floor(yearsSaved);
-                const monthsSavedRemainder = Math.round((yearsSaved - yearsSavedInt) * 12);
-                if (monthsSavedRemainder === 0) {
-                    timeSavedDisplay = `${yearsSavedInt} year${yearsSavedInt !== 1 ? 's' : ''}`;
-                } else {
-                    timeSavedDisplay = `${yearsSavedInt}y ${monthsSavedRemainder}m`;
-                }
-            } else {
-                timeSavedDisplay = `${Math.round(monthsSaved)} months`;
-            }
-            
-            // Update summary
+
+            // Update summary displays
             document.getElementById('totalInterest').textContent = formatCurrency(totalInterestPaid);
             document.getElementById('totalPaid').textContent = formatCurrency(loanAmount + totalInterestPaid);
             document.getElementById('interestSaved').textContent = formatCurrency(interestSaved);
-            document.getElementById('timeSaved').textContent = timeSavedDisplay;
-            document.getElementById('totalTime').textContent = totalTimeDisplay;
+            document.getElementById('timeSaved').textContent = formatTimePeriod(monthsSaved);
+            document.getElementById('totalTime').textContent = formatTimePeriod(actualMonthsTaken);
             document.getElementById('emiAmount').textContent = formatCurrency(emi);
             document.getElementById('finalOffset').textContent = formatCurrency(offsetBalance);
+            document.getElementById('breakevenTime').textContent = breakevenText;
+
             // Populate monthly table
             const monthlyTableBody = document.getElementById('monthlyTableBody');
             monthlyTableBody.innerHTML = '';
@@ -711,6 +908,7 @@
                     row.classList.add('highlight-row');
                 }
             });
+
             // Populate fortnightly table
             const fortnightlyTableBody = document.getElementById('fortnightlyTableBody');
             fortnightlyTableBody.innerHTML = '';
@@ -724,6 +922,7 @@
                     <td>${formatCurrency(data.principalPaid)}</td>
                 `;
             });
+
             // Populate yearly table
             const yearlyTableBody = document.getElementById('yearlyTableBody');
             yearlyTableBody.innerHTML = '';
@@ -738,13 +937,20 @@
                     <td>${formatCurrency(data.principalPaid)}</td>
                     <td><strong>${formatCurrency(totalPaidTillNow)}</strong></td>
                 `;
-                row.classList.add('highlight-row');
+                // Highlight breakeven years (offset >= loan) with special color
+                if (data.offsetBalance >= data.loanBalance && data.loanBalance > 0) {
+                    row.classList.add('breakeven-row');
+                } else {
+                    row.classList.add('highlight-row');
+                }
             });
         }
+
         // Calculate on page load with default values
-        window.onload = function() {
+        window.onload = function () {
             calculate();
         };
     </script>
 </body>
+
 </html>
